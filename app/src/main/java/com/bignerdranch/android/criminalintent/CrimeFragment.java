@@ -12,6 +12,9 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 
+import java.text.DateFormat;
+import java.util.Date;
+
 /**
  * Created by Martin on 2/23/16.
  */
@@ -50,7 +53,11 @@ public class CrimeFragment extends Fragment {
         });
 
         mDateButon = (Button) v.findViewById(R.id.crime_date);
-        mDateButon.setText(mCrime.getDate().toString());
+
+        String cleanDate = DateFormat.getDateInstance(DateFormat.FULL).format(mCrime.getDate());
+        mDateButon.setText(cleanDate);
+
+        //mDateButton.setText(mCrime.getDate().toString());
         mDateButon.setEnabled(false);
 
         mSolvedCheckBox = (CheckBox) v.findViewById(R.id.crime_solved);
@@ -64,4 +71,6 @@ public class CrimeFragment extends Fragment {
 
         return v;
     }
+
+
 }
