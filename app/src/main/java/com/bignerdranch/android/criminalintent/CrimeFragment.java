@@ -13,7 +13,9 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -25,7 +27,7 @@ public class CrimeFragment extends Fragment {
 
     private Crime mCrime;
     private EditText mTitleField;
-    private Button mDateButon;
+    private Button mDateButton;
     private CheckBox mSolvedCheckBox;
 
     public static CrimeFragment newInstance(UUID crimeId){
@@ -67,13 +69,13 @@ public class CrimeFragment extends Fragment {
             }
         });
 
-        mDateButon = (Button) v.findViewById(R.id.crime_date);
+        mDateButton = (Button) v.findViewById(R.id.crime_date);
 
         String cleanDate = DateFormat.getDateInstance(DateFormat.FULL).format(mCrime.getDate());
-        mDateButon.setText(cleanDate);
+        mDateButton.setText(cleanDate);
 
         //mDateButton.setText(mCrime.getDate().toString());
-        mDateButon.setEnabled(false);
+        mDateButton.setEnabled(false);
 
         mSolvedCheckBox = (CheckBox) v.findViewById(R.id.crime_solved);
         mSolvedCheckBox.setChecked(mCrime.isSolved());
