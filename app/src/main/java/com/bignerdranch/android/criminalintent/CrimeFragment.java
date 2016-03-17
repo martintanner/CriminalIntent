@@ -58,6 +58,13 @@ public class CrimeFragment extends Fragment {
     }
 
     @Override
+    public void onPause(){
+        super.onPause();
+
+        CrimeLab.get(getActivity()).updateCrime(mCrime);
+    }
+
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         if (resultCode != Activity.RESULT_OK){
             return;
@@ -84,7 +91,7 @@ public class CrimeFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()){
             case R.id.menu_item_delete_crime:
-                CrimeLab.get(getActivity()).delete(mCrime);
+                CrimeLab.get(getActivity()).delete(mCrime.getId());
                 getActivity().finish();
                 return true;
             default:
