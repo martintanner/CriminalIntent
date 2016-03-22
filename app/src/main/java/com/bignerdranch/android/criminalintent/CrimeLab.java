@@ -4,11 +4,13 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Environment;
 
 import com.bignerdranch.android.criminalintent.database.CrimeCursorWrapper;
 import com.bignerdranch.android.criminalintent.database.CrimeDbSchema;
 import com.bignerdranch.android.criminalintent.database.CrimeDbSchema.CrimeTable;
 
+import java.io.File;
 import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,8 +45,8 @@ public class CrimeLab {
 
     public void delete(UUID crimeId){
         String rowId = crimeId.toString();
-        
-        mDatabase.delete(CrimeTable.NAME, CrimeTable.Cols.UUID + " = ?", new String[] {rowId});
+
+        mDatabase.delete(CrimeTable.NAME, CrimeTable.Cols.UUID + " = ?", new String[]{rowId});
 
     }
 
@@ -83,6 +85,16 @@ public class CrimeLab {
         }
     }
 
+    public File getPhotoFile(Crime crime){
+        File externalFilesDir = mContext.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+
+        if (externalFilesDir == null){
+            return null;
+        }
+
+        return new File(externalFilesDir, crime.getPhotoFilename());
+    }
+
     public void updateCrime(Crime crime){
         String uuidString = crime.getId().toString();
         ContentValues values = getContentValues(crime);
@@ -96,6 +108,7 @@ public class CrimeLab {
         values.put(CrimeTable.Cols.TITLE, crime.getTitle());
         values.put(CrimeTable.Cols.DATE, crime.getDate().getTime());
         values.put(CrimeTable.Cols.SOLVED, crime.isSolved() ? 1 : 0);
+        values.put(CrimeTable.Cols.SUSPECT, crime.getSuspect());
 
         return values;
     }
